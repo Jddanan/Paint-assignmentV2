@@ -23,11 +23,12 @@ body{
     position:relative;
     left:5%;
     top:5%;
+    overflow:hidden;
 }
 .side-menu{
     top:0;
     left:0;
-    width: 250px;
+    width: 150px;
     position: absolute;
     height: 100vh;
     background-color:royalblue;
@@ -40,24 +41,26 @@ body{
 .side-menu ul{
     list-style: none;
 }
-#red{
-    background-color:red;
-}
-#yellow{
-    background-color:yellow;
-}
-#blue{
-    background-color:blue;
-}
-#black{
-    background-color:black;
-}
-#green{
-    background-color:green;
-}
-#eraser{
-    background-color:white;
-}
+
 .side-menu button.selected{
     border:6px solid white;
+}
+.side-menu button{
+    color:white;
+    background-color: blue;    
+    font-size:20px;
+    margin: 3px;
+    height:20px;
+    width: 80%;
+    margin-left:10px;
+    cursor:pointer;
+    box-sizing: border-box;
+    vertical-align: middle;
+}
+.side-menu .top-menu button{
+    height:40px;
+}
+
+.side-menu button.selected{
+    border:2px solid white;
 }
