@@ -1,11 +1,12 @@
 var canvas = {};
 canvas.color = ["red", "yellow", "blue", "green", "black", "purple", "white"];
 canvas.selectedColor = "black";
-canvas.size = ["small", "medium", "large"];
-canvas.selectedSize = "medium";
+canvas.size = ["x-Small", "Small", "Medium", "Large", "x-Large"];
+canvas.selectedSize = "3px";
 
 canvas.start = function () {
     canvas.generateDynamicColor();
+    canvas.generateDynamicSize();
 }
 
 
@@ -21,9 +22,9 @@ var canvasDraw = document.getElementById("canvas");
 canvas.draw = function (e) {
     newDiv = document.createElement("div");
     canvasDraw.appendChild(newDiv);
-    newDiv.style.backgroundColor = colorToDraw;
-    newDiv.style.width = "4px";
-    newDiv.style.height = "4px";
+    newDiv.style.backgroundColor = canvas.selectedColor;
+    newDiv.style.width = canvas.selectedSize;
+    newDiv.style.height = canvas.selectedSize;
     newDiv.style.borderRadius = "50%";
     newDiv.style.position = "absolute";
     newDiv.style.top = e.pageY - this.offsetTop + "px";
@@ -32,10 +33,12 @@ canvas.draw = function (e) {
 canvasDraw.addEventListener("mousedown", function () {
     canvasDraw.addEventListener("mousemove", canvas.draw)
 });
+canvasDraw.addEventListener("click", function () {
+    canvasDraw.addEventListener("click", canvas.draw)
+});
 document.addEventListener("click", function () {
     canvasDraw.removeEventListener("mousemove", canvas.draw)
 })
-var colorToDraw = "black"
 canvas.generateDynamicColor = function () {
     var colorButton = document.getElementById("color-menu");
     for (var i = 0; i < canvas.color.length; i++) {
@@ -49,12 +52,43 @@ canvas.generateDynamicColor = function () {
         newButton.addEventListener("click", function () {
             var clickColor = this;
             canvas.selectedColor = clickColor.id;
-            colorToDraw = clickColor.id;
             var allColorButton = document.getElementsByClassName("colorButton");
             for (var j = 0; j < allColorButton.length; j++) {
                 allColorButton[j].classList.remove("selected")
             }
             clickColor.classList.add("selected")
+        })
+    }
+}
+canvas.generateDynamicSize = function () {
+    var sizeButton = document.getElementById("size-menu");
+    var buttonItem = document.createElement("select");
+    for (var i = 0; i < canvas.size.length; i++) {
+        var newButton = document.createElement("option");
+        var buttonLabel = document.createTextNode(canvas.size[i]);
+        newButton.className = "sizeButton";
+        newButton.id = canvas.size[i];
+        buttonItem.appendChild(newButton);
+        sizeButton.appendChild(buttonItem);
+        newButton.appendChild(buttonLabel);
+        buttonItem.addEventListener("change", function (e) {
+            if (e.target.value == "x-Small") {
+                canvas.selectedSize = "3px";
+            }
+
+            else if (e.target.value == "Small") {
+                canvas.selectedSize = "5px";
+
+            }
+            else if (e.target.value == "Medium") {
+                canvas.selectedSize = "8px";
+            }
+            else if (e.target.value == "Large") {
+                canvas.selectedSize = "14px";
+            }
+            else if (e.target.value == "x-Large") {
+                canvas.selectedSize = "20px";
+            }
         })
     }
 }

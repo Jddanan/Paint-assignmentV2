@@ -64,3 +64,12 @@ body{
 .side-menu button.selected{
     border:2px solid white;
 }
+.side-menu select{
+    height:20px;
+    width:50%;
+    background-color: white;
+    margin-left : 20%;
+    
+}
+
+    
