@@ -9,7 +9,7 @@
 }
 body{
     background : url("../images/canvas_background.jpg");
-    background-size:cover;;
+    background-size:cover;
 }
 .canvas-wrapper{
     text-align: center;
@@ -47,7 +47,8 @@ body{
 }
 .side-menu button{
     color:white;
-    background-color: blue;    
+    background-color: blue;  
+    font-family: 'Spicy Rice', cursive;  
     font-size:20px;
     margin: 3px;
     height:20px;

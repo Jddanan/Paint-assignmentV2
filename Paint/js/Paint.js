@@ -3,12 +3,14 @@ canvas.color = ["red", "yellow", "blue", "green", "black", "purple", "white"];
 canvas.selectedColor = "black";
 canvas.size = ["x-Small", "Small", "Medium", "Large", "x-Large"];
 canvas.selectedSize = "3px";
+canvas.shape = ["Circle", "Square"];
+canvas.selectedShape = "50%";
 
 canvas.start = function () {
     canvas.generateDynamicColor();
     canvas.generateDynamicSize();
+    canvas.generateDynamicShape();
 }
-
 
 var newBtn = document.getElementById("new");
 newBtn.addEventListener("click", canvas.new);
@@ -25,7 +27,7 @@ canvas.draw = function (e) {
     newDiv.style.backgroundColor = canvas.selectedColor;
     newDiv.style.width = canvas.selectedSize;
     newDiv.style.height = canvas.selectedSize;
-    newDiv.style.borderRadius = "50%";
+    newDiv.style.borderRadius = canvas.selectedShape;
     newDiv.style.position = "absolute";
     newDiv.style.top = e.pageY - this.offsetTop + "px";
     newDiv.style.left = e.pageX - this.offsetLeft + "px";
@@ -75,10 +77,8 @@ canvas.generateDynamicSize = function () {
             if (e.target.value == "x-Small") {
                 canvas.selectedSize = "3px";
             }
-
             else if (e.target.value == "Small") {
                 canvas.selectedSize = "5px";
-
             }
             else if (e.target.value == "Medium") {
                 canvas.selectedSize = "8px";
@@ -88,6 +88,27 @@ canvas.generateDynamicSize = function () {
             }
             else if (e.target.value == "x-Large") {
                 canvas.selectedSize = "20px";
+            }
+        })
+    }
+}
+canvas.generateDynamicShape = function () {
+    var shapeButton = document.getElementById("shape-menu");
+    var buttonItem = document.createElement("select");
+    for (var i = 0; i < canvas.shape.length; i++) {
+        var newButton = document.createElement("option");
+        var buttonLabel = document.createTextNode(canvas.shape[i]);
+        newButton.className = "shapeButton";
+        newButton.id = canvas.shape[i];
+        buttonItem.appendChild(newButton);
+        shapeButton.appendChild(buttonItem);
+        newButton.appendChild(buttonLabel);
+        buttonItem.addEventListener("change", function (e) {
+            if (e.target.value == "Circle") {
+                canvas.selectedShape = "50%";
+            }
+            else if (e.target.value == "Square") {
+                canvas.selectedShape = "0";
             }
         })
     }
