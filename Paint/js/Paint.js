@@ -1,5 +1,5 @@
 var canvas = {};
-canvas.color = ["red", "yellow", "blue", "green", "black", "purple", "white"];
+canvas.color = ["red", "yellow", "blue", "green", "black", "purple", "gray", "orange", "pink", "white"];
 canvas.selectedColor = "black";
 canvas.size = ["x-Small", "Small", "Medium", "Large", "x-Large"];
 canvas.selectedSize = "3px";

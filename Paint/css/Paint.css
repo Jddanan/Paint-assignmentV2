@@ -13,7 +13,6 @@ body{
 }
 .canvas-wrapper{
     text-align: center;
-    
 }
 #canvas{
     height:500px;
@@ -21,9 +20,9 @@ body{
     background-color:white;
     margin:auto;
     position:relative;
-    left:5%;
-    top:5%;
+    right:8%;
     overflow:hidden;
+    margin-top:2%;
 }
 .side-menu{
     top:0;
@@ -31,27 +30,35 @@ body{
     width: 150px;
     position: absolute;
     height: 100vh;
-    background-color:royalblue;
-    color:rgb(230,230,230);
+    background-color:lightgray;
+    color:rgb(100,100,100);
 }
 .side-menu .menu-title{
     text-align: center;
 }
-
-.side-menu ul{
+.side-menu #color-menu{
     list-style: none;
+    columns: 2;
+    width:60%;
+    margin-left:10%;
+} 
+.side-menu #color-menu button{
+    border-radius: 50%;
+    height:35px;
+    width:35px;
+    padding:auto;
 }
-
-.side-menu button.selected{
-    border:6px solid white;
+.side-menu #color-menu button#white{
+background: url("../images/eraser.png");
+background-size: cover;
 }
 .side-menu button{
-    color:white;
-    background-color: blue;  
+    color:rgb(100,100,100);
+    background-color: lightblue;  
     font-family: 'Spicy Rice', cursive;  
     font-size:20px;
     margin: 3px;
-    height:20px;
+    height:15px;
     width: 80%;
     margin-left:10px;
     cursor:pointer;
@@ -61,16 +68,12 @@ body{
 .side-menu .top-menu button{
     height:40px;
 }
-
 .side-menu button.selected{
-    border:2px solid white;
+    border:2px solid lightgray;
 }
 .side-menu select{
     height:20px;
     width:50%;
     background-color: white;
     margin-left : 20%;
-    
 }
-
-    
