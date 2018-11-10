@@ -99,7 +99,7 @@ canvas.generateDynamicShape = function () {
 }
 canvas.new = function () {
     var allNewDiv = canvasDraw.getElementsByClassName("newDiv");
-    while (allNewDiv.length > 0){
+    while (allNewDiv.length > 0) {
         canvasDraw.removeChild(allNewDiv[0]);
     }
 }
@@ -115,13 +115,34 @@ canvas.save = function () {
         var newDivObj = {};
         newDivObj["size"] = currentNewDiv.style.height;
         newDivObj["color"] = currentNewDiv.style.backgroundColor;
+        newDivObj["shape"] = currentNewDiv.style.borderRadius;
         newDivObj["top"] = currentNewDiv.getBoundingClientRect().top - canvasTop;
         newDivObj["left"] = currentNewDiv.getBoundingClientRect().left - canvasLeft;
         canvasObj["newDiv"].push(newDivObj);
     }
-    localStorage.setItem("paintingName", JSON.stringify(canvasObj));
+    localStorage.setItem("Drawing", JSON.stringify(canvasObj));
     alert("Your painting have been saved");
 };
+canvas.load = function () {
+    var loadedCanvas = localStorage.getItem("Drawing");
+    var canvasObj = JSON.parse(loadedCanvas);
+    canvas.new();
+    var allNewDiv = canvasObj["newDiv"]
+    for (var i = 0; i < allNewDiv.length; i++) {
+        var currentNewDiv = allNewDiv[i];
+        var newDiv = document.createElement("div");
+        newDiv.style.height = currentNewDiv["size"];
+        newDiv.style.width = currentNewDiv["size"];
+        newDiv.style.borderRadius = currentNewDiv["shape"]
+        newDiv.style.backgroundColor = currentNewDiv["color"];
+        newDiv.style.position = "absolute";
+        newDiv.className = "newDiv";
+        newDiv.style.top = currentNewDiv["top"] + "px";
+        newDiv.style.left = currentNewDiv["left"] + "px";
+        canvasDraw.appendChild(newDiv);
+    }
+    alert("Your painting is loaded");
+}
 
 var newBtn = document.getElementById("new");
 newBtn.addEventListener("click", canvas.new);
