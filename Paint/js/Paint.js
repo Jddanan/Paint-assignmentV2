@@ -1,7 +1,7 @@
 var canvas = {};
 canvas.color = ["red", "yellow", "blue", "green", "black", "purple", "gray", "orange", "pink", "white"];
 canvas.selectedColor = "black";
-canvas.size = ["x-Small", "Small", "Medium", "Large", "x-Large"];
+canvas.size = ["3", "6", "9", "12", "15","18","21","24"];
 canvas.selectedSize = "3px";
 canvas.shape = ["Circle", "Square"];
 canvas.selectedShape = "50%";
@@ -10,16 +10,15 @@ canvas.start = function () {
     canvas.generateDynamicColor();
     canvas.generateDynamicSize();
     canvas.generateDynamicShape();
- 
+    canvas.bindDrawingActions();
 }
-
-
 
 var newDiv;
 var canvasDraw = document.getElementById("canvas");
 canvas.draw = function (e) {
     newDiv = document.createElement("div");
     canvasDraw.appendChild(newDiv);
+    newDiv.className = "newDiv";
     newDiv.style.backgroundColor = canvas.selectedColor;
     newDiv.style.width = canvas.selectedSize;
     newDiv.style.height = canvas.selectedSize;
@@ -28,15 +27,18 @@ canvas.draw = function (e) {
     newDiv.style.top = e.pageY - this.offsetTop + "px";
     newDiv.style.left = e.pageX - this.offsetLeft + "px";
 }
-canvasDraw.addEventListener("mousedown", function () {
-    canvasDraw.addEventListener("mousemove", canvas.draw)
-});
-canvasDraw.addEventListener("click", function () {
-    canvasDraw.addEventListener("click", canvas.draw)
-});
-document.addEventListener("click", function () {
-    canvasDraw.removeEventListener("mousemove", canvas.draw)
-})
+canvas.bindDrawingActions = function () {
+    canvasDraw.addEventListener("mousedown", function () {
+        canvasDraw.addEventListener("mousemove", canvas.draw)
+    });
+    canvasDraw.addEventListener("click", function () {
+        canvasDraw.addEventListener("click", canvas.draw)
+    });
+    document.addEventListener("click", function () {
+        canvasDraw.removeEventListener("mousemove", canvas.draw)
+    })
+}
+
 canvas.generateDynamicColor = function () {
     var colorButton = document.getElementById("color-menu");
     for (var i = 0; i < canvas.color.length; i++) {
@@ -63,28 +65,14 @@ canvas.generateDynamicSize = function () {
     var buttonItem = document.createElement("select");
     for (var i = 0; i < canvas.size.length; i++) {
         var newButton = document.createElement("option");
-        var buttonLabel = document.createTextNode(canvas.size[i]);
+        var buttonLabel = document.createTextNode(`${canvas.size[i]}px`);
         newButton.className = "sizeButton";
         newButton.id = canvas.size[i];
         buttonItem.appendChild(newButton);
         sizeButton.appendChild(buttonItem);
         newButton.appendChild(buttonLabel);
         buttonItem.addEventListener("change", function (e) {
-            if (e.target.value == "x-Small") {
-                canvas.selectedSize = "3px";
-            }
-            else if (e.target.value == "Small") {
-                canvas.selectedSize = "5px";
-            }
-            else if (e.target.value == "Medium") {
-                canvas.selectedSize = "8px";
-            }
-            else if (e.target.value == "Large") {
-                canvas.selectedSize = "14px";
-            }
-            else if (e.target.value == "x-Large") {
-                canvas.selectedSize = "20px";
-            }
+            canvas.selectedSize = e.target.value;
         })
     }
 }
@@ -109,12 +97,51 @@ canvas.generateDynamicShape = function () {
         })
     }
 }
+canvas.new = function () {
 
-canvas.save = function(){
-    var saveName = prompt("Please enter a name for this file")
-    var data = canvasDraw.innerHTML;
-    localStorage.setItem(saveName,data);
 }
+canvas.save = function () {
+    // var saveName = prompt("Please enter a name for this file")
+    // var data = canvasDraw.innerHTML;
+    // localStorage.setItem(saveName, data);
+    var canvasLeft = canvasDraw.getBoundingClientRect().left;
+    var canvasTop = canvasDraw.getBoundingClientRect().top;
+    var canvasObj = {};
+    canvasObj["name"] = prompt("Please enter a name for this file");
+    canvasObj["newDiv"] = [];
+    var allNewDiv = canvasDraw.getElementsByClassName("newDiv");
+    for (var i = 0; i < allNewDiv.length; i++) {
+        var currentNewDiv = allNewDiv[i];
+        var newDivObj = {};
+        newDivObj["size"] = currentNewDiv.style.height;
+        newDivObj["color"] = currentNewDiv.style.backgroundColor;
+        newDivObj["top"] = currentNewDiv.getBoundingClientRect().top - canvasTop;
+        newDivObj["left"] = currentNewDiv.getBoundingClientRect().left - canvasLeft;
+        canvasObj["newDiv"].push(newDivObj);
+    }
+    localStorage.setItem("paintingName", JSON.stringify(canvasObj));
+    alert("Your painting have been saved");
+};
+// canvas.save = function () {
+//     var canvas = document.getElementById("canvas");
+//     var canvasLeft = canvas.getBoundingClientRect().left;
+//     var canvasTop = canvas.getBoundingClientRect().top;
+//     var canvasObj = {};
+//     canvasObj["name"] = document.getElementById("painting-title").innerHTML;
+//     canvasObj["pixels"] = [];
+//     var allPixels = canvas.getElementsByClassName("pixel");
+//     for (var i = 0; i < allPixels.length; i++) {
+//         var currentPixel = allPixels[i];
+//         var pixelObj = {};
+//         pixelObj["size"] = currentPixel.style.height;
+//         pixelObj["color"] = currentPixel.style.backgroundColor;
+//         pixelObj["top"] = currentPixel.getBoundingClientRect().top - canvasTop;
+//         pixelObj["left"] = currentPixel.getBoundingClientRect().left - canvasLeft;
+//         canvasObj["pixels"].push(pixelObj);
+//     }
+//     localStorage.setItem("painting", JSON.stringify(canvasObj));
+//     alert("your painting have been saved");
+// };
 
 var newBtn = document.getElementById("new");
 newBtn.addEventListener("click", canvas.new);
