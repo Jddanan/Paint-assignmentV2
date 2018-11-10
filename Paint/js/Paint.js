@@ -1,7 +1,7 @@
 var canvas = {};
 canvas.color = ["red", "yellow", "blue", "green", "black", "purple", "gray", "orange", "pink", "white"];
 canvas.selectedColor = "black";
-canvas.size = ["3", "6", "9", "12", "15","18","21","24"];
+canvas.size = ["3", "6", "9", "12", "15", "18", "21", "24"];
 canvas.selectedSize = "3px";
 canvas.shape = ["Circle", "Square"];
 canvas.selectedShape = "50%";
@@ -98,12 +98,12 @@ canvas.generateDynamicShape = function () {
     }
 }
 canvas.new = function () {
-
+    var allNewDiv = canvasDraw.getElementsByClassName("newDiv");
+    while (allNewDiv.length > 0){
+        canvasDraw.removeChild(allNewDiv[0]);
+    }
 }
 canvas.save = function () {
-    // var saveName = prompt("Please enter a name for this file")
-    // var data = canvasDraw.innerHTML;
-    // localStorage.setItem(saveName, data);
     var canvasLeft = canvasDraw.getBoundingClientRect().left;
     var canvasTop = canvasDraw.getBoundingClientRect().top;
     var canvasObj = {};
@@ -122,26 +122,6 @@ canvas.save = function () {
     localStorage.setItem("paintingName", JSON.stringify(canvasObj));
     alert("Your painting have been saved");
 };
-// canvas.save = function () {
-//     var canvas = document.getElementById("canvas");
-//     var canvasLeft = canvas.getBoundingClientRect().left;
-//     var canvasTop = canvas.getBoundingClientRect().top;
-//     var canvasObj = {};
-//     canvasObj["name"] = document.getElementById("painting-title").innerHTML;
-//     canvasObj["pixels"] = [];
-//     var allPixels = canvas.getElementsByClassName("pixel");
-//     for (var i = 0; i < allPixels.length; i++) {
-//         var currentPixel = allPixels[i];
-//         var pixelObj = {};
-//         pixelObj["size"] = currentPixel.style.height;
-//         pixelObj["color"] = currentPixel.style.backgroundColor;
-//         pixelObj["top"] = currentPixel.getBoundingClientRect().top - canvasTop;
-//         pixelObj["left"] = currentPixel.getBoundingClientRect().left - canvasLeft;
-//         canvasObj["pixels"].push(pixelObj);
-//     }
-//     localStorage.setItem("painting", JSON.stringify(canvasObj));
-//     alert("your painting have been saved");
-// };
 
 var newBtn = document.getElementById("new");
 newBtn.addEventListener("click", canvas.new);
