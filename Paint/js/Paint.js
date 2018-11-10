@@ -11,6 +11,7 @@ canvas.start = function () {
     canvas.generateDynamicSize();
     canvas.generateDynamicShape();
     canvas.bindDrawingActions();
+    canvas.bindMenuActions();
 }
 
 var newDiv;
@@ -143,12 +144,13 @@ canvas.load = function () {
     }
     alert("Your painting is loaded");
 }
-
-var newBtn = document.getElementById("new");
-newBtn.addEventListener("click", canvas.new);
-var saveBtn = document.getElementById("save");
-saveBtn.addEventListener("click", canvas.save);
-var loadBtn = document.getElementById("load");
-loadBtn.addEventListener("click", canvas.load);
+canvas.bindMenuActions = function () {
+    var newBtn = document.getElementById("new");
+    newBtn.addEventListener("click", canvas.new);
+    var saveBtn = document.getElementById("save");
+    saveBtn.addEventListener("click", canvas.save);
+    var loadBtn = document.getElementById("load");
+    loadBtn.addEventListener("click", canvas.load);
+}
 
 canvas.start();
