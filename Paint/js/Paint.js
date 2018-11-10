@@ -10,14 +10,10 @@ canvas.start = function () {
     canvas.generateDynamicColor();
     canvas.generateDynamicSize();
     canvas.generateDynamicShape();
+ 
 }
 
-var newBtn = document.getElementById("new");
-newBtn.addEventListener("click", canvas.new);
-var saveBtn = document.getElementById("save");
-saveBtn.addEventListener("click", canvas.save);
-var loadBtn = document.getElementById("load");
-loadBtn.addEventListener("click", canvas.load);
+
 
 var newDiv;
 var canvasDraw = document.getElementById("canvas");
@@ -113,4 +109,18 @@ canvas.generateDynamicShape = function () {
         })
     }
 }
+
+canvas.save = function(){
+    var saveName = prompt("Please enter a name for this file")
+    var data = canvasDraw.innerHTML;
+    localStorage.setItem(saveName,data);
+}
+
+var newBtn = document.getElementById("new");
+newBtn.addEventListener("click", canvas.new);
+var saveBtn = document.getElementById("save");
+saveBtn.addEventListener("click", canvas.save);
+var loadBtn = document.getElementById("load");
+loadBtn.addEventListener("click", canvas.load);
+
 canvas.start();
